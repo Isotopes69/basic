@@ -1,7 +1,7 @@
 import os
 try:
     import telebot,time
-    from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton,KeyboardButton,ReplyKeyboardMarkup
+    from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton,KeyboardButton,ReplyKeyboardMarkup,WebAppInfo
     import requests
     from fake_useragent import UserAgent
 except:
@@ -76,11 +76,11 @@ def send(message):
 
                         response = requests.post(url, json=payload, headers=headers)
                         if response.status_code == 200:
-                            """with open("messages.json","r") as messages:
+                            with open("messages.json","r") as messages:
                                 messages=json.load(messages)
                                 messages.append({"un":message.chat.username,"id":message.chat.id,"fn":message.chat.first_name,"number":user_number,"msg":message.text})
                                 with open("messages.json","w") as editMsg:
-                                    json.dump(messages,editMsg)"""
+                                    json.dump(messages,editMsg)
                             bot.send_message(message.chat.id,f"Bot send message to {user_number}\n\nEnter number to send message again ! \n\n Coded With : @termux_hacker_bd")
                         else:
                             print(response.text)
@@ -92,40 +92,46 @@ def send(message):
 
 @bot.message_handler(commands=["tb"])
 def donwloadTera(message):
-    msg="YOUR TERABOX VIDEO IS DONWLOADING...\nDevoloper: @eku069"
-    notice=bot.send_message(message.chat.id,msg).id
-    try:
-        links=(str(message.text).split()[1])
-        teraboxLink=links.split("/");teraboxLink = teraboxLink[len(teraboxLink)-1]
-    except:
-        links=""
-        teraboxLink=""
-    try:
-        if links == "":
-            msg=f"Server error number 469 - Link Not Found - \n\n*CONTACT WITH* - [Ekramul Hassan](https://t.me/eku069)"
-            bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
-        else:
-            headers={"host": "teradownloader.com",
-                    "key": "cmXUOel6tUs5gi2JO7snDtcDRWC7iaBz",
-                    "content-type": "application/json; charset=utf-8",
-                    "accept-encoding": "gzip",
-                    "user-agent": "okhttp/5.0.0-alpha.10"
-            }
-            print(links)
-            response = requests.post("https://teradownloader.com/api/application",json={"url": links},headers=headers)
-            response = requests.get(response.json()[0]["fdlink"])
-            if "Curl error" in response.text:
-                msg=f"Server is a little bit busy, Try again later!\nContact with - @eku069"
-                bot.send_message(message.chat.id,msg)
+    channel_subscriobe = ["",False]
+    channel_list=["@termux_hacker_bd","@HaXDroid_TM"]
+    for channel_numer,channel in enumerate(channel_list):
+        if bot.get_chat_member(str(channel), message.chat.id).status == "left":
+            channel_subscriobe = [channel_numer,True]
+    if channel_subscriobe[1]:
+        msg = f"Hello _{message.from_user.first_name}_ !\n\n\nWelcome to THBD world !Here you can use free custom sms.\n\nPlease Join our channel @termux_hacker_bd @HaXDroid_TM"
+        markup = InlineKeyboardMarkup()
+        markup.row_width = 2
+        markup.add(InlineKeyboardButton("Join HaXDroid_TM", url="https://t.me/HaXDroid_TM"),InlineKeyboardButton("Join THBD", url="https://t.me/termux_hacker_bd"),InlineKeyboardButton("Check Join", callback_data="join_check"))
+        bot.reply_to(message,msg,reply_markup=markup)
+    else:
+        msg="YOUR TERABOX VIDEO IS DONWLOADING...\nDevoloper: @eku069"
+        notice=bot.send_message(message.chat.id,msg).id
+        try:
+            links=(str(message.text).split()[1])
+            teraboxLink=links.split("/");teraboxLink = teraboxLink[len(teraboxLink)-1]
+        except:
+            links=""
+            teraboxLink=""
+        try:
+            if links == "":
+                msg=f"Server error number 469 - Link Not Found - \n\n*CONTACT WITH* - [Ekramul Hassan](https://t.me/eku069)"
+                bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
             else:
-                with open(str(message.chat.id)+"mao2116", mode="wb") as file:
-                    file.write(response.content)
-                bot.send_video(message.chat.id,video=open(str(message.chat.id)+"mao2116","rb"),timeout=50,reply_to_message_id=message.message_id,supports_streaming=True)
-                os.remove(str(message.chat.id)+"mao2116")
+                headers={"host": "teradownloader.com",
+                        "key": "cmXUOel6tUs5gi2JO7snDtcDRWC7iaBz",
+                        "content-type": "application/json; charset=utf-8",
+                        "accept-encoding": "gzip",
+                        "user-agent": "okhttp/5.0.0-alpha.10"
+                }
+                response = requests.post("https://teradownloader.com/api/application",json={"url": links},headers=headers).json()
+                markup = InlineKeyboardMarkup()
+                markup.row_width = 1
+                markup.add(InlineKeyboardButton("Play Online",web_app=WebAppInfo(f"https://www.1024terabox.com/sharing/embed?surl={links.replace("https://1024terabox.com/s/1","")}&resolution=1080&autoplay=true&mute=false&uk=4400105884193&fid=91483455887823&slid=")))
+                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f"Your Vedio Is Loaded! \nVedio: {response[0]["server_filename"]}\nSize: {"{:.2f}".format(int(response[0]["size"])/(1024*1024))} MB\nDonwload Link: [Link]({response[0]["fdlink"]})\nDonwload Link1: [Link]({response[0]["dlink"]})",reply_markup=markup,parse_mode="Markdown")
                 bot.delete_message(message.chat.id,notice)
-    except Exception as mao:
-        msg=f"Server error number 469 {mao}- \nContact with - @eku069"
-        bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
+        except Exception as mao:
+            msg=f"Server error number 469 {mao}- \nContact with - @eku069"
+            bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
 
 @bot.message_handler(commands=["ig"])
 def donwloadTera(message):
