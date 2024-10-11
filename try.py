@@ -1,4 +1,4 @@
-#
+##
 import os
 try:
     import telebot,time
@@ -128,7 +128,7 @@ def donwloadTera(message):
                 markup = InlineKeyboardMarkup()
                 markup.row_width = 1
                 markup.add(InlineKeyboardButton("Play Online",web_app=WebAppInfo(f'https://www.1024terabox.com/sharing/embed?surl={links.replace("https://1024terabox.com/s/1","")}&resolution=1080&autoplay=true&mute=false&uk=4400105884193&fid=91483455887823&slid=')))
-                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f'Your Vedio Is Loaded! \nVedio: {response[0]["server_filename"]}\nSize: {"{:.2f}".format(int(response[0]["size"])/(1024*1024))} MB\nDonwload Link: [Link]({response[0]["fdlink"]})\nDonwload Link1: [Link]({response[0]["dlink"]})',reply_markup=markup,parse_mode="Markdown")
+                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f'Your Vedio Is Loaded! \nVedio: {response[0]["server_filename"]}\nSize: {"{:.2f}".format(int(response[0]["size"])/(1024*1024))} MB\nDonwload Link: [Link]({response[0]["fdlink"]})\nDonwload Link1: [Link]({response[0]["dlink"]})\n\nCoded_With: [Ekramul Hassan](https://t.me/eku069)',reply_markup=markup,parse_mode="Markdown")
                 bot.delete_message(message.chat.id,notice)
         except Exception as mao:
             msg=f"Server error number 469 {mao}- \nContact with - @eku069"
@@ -169,7 +169,7 @@ def donwloadTera(message):
 
 @bot.message_handler(commands=["help"])
 def help(message):
-    bot.send_message(message.chat.id , "THIS TOOL CREATED WITH [TERMUX HACKER BD](https://t.me/@termux_hacker_bd) !**COMMANDS**\n`/send` - To send custom sms in any bd number!\n`/tb` _YOUR_TERABOX_LINK_ - To download any terabox vedio!\n`/ig` YOUR_INSTAGRAM_LINK - To donwload any instagram reels!\n\n*CODED BY: @eku069* \n\nCUSTOM API BY: [Ekramul Hassan](https://fb.com/m.e.h.2116/)",parse_mode="Markdown")
+    bot.send_message(message.chat.id , "THIS TOOL CREATED WITH [TERMUX HACKER BD](https://t.me/@termux_hacker_bd) !\n**COMMANDS**\n\n`/send` - To send custom sms in any bd number!\n\n`/tb` _YOUR_TERABOX_LINK_ - To download any terabox vedio!\n\n`/ig` YOUR_INSTAGRAM_LINK - To donwload any instagram reels!\n\n*CODED BY: @eku069* \n\nCUSTOM API BY: [Ekramul Hassan](https://fb.com/m.e.h.2116/)",parse_mode="Markdown")
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
