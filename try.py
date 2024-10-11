@@ -13,7 +13,7 @@ except:
     from fake_useragent import UserAgent
 import json
 
-TOKEN = "7259873563:AAHWozwK8vRQYk3NITZMEP4ZolHQXYKbCtM"  #MAIN BOT TOKEN
+TOKEN = "7524485123:AAE2gWmVDfkfVhtLFLIeT6D6ORg2Q2GlvwA"  #MAIN BOT TOKEN
 bot = telebot.TeleBot(TOKEN)
 ua = UserAgent()
 
