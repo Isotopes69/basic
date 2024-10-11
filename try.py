@@ -1,3 +1,4 @@
+#
 import os
 try:
     import telebot,time
@@ -12,7 +13,7 @@ except:
     from fake_useragent import UserAgent
 import json
 
-TOKEN = "7524485123:AAE2gWmVDfkfVhtLFLIeT6D6ORg2Q2GlvwA"  #MAIN BOT TOKEN
+TOKEN = "7259873563:AAHWozwK8vRQYk3NITZMEP4ZolHQXYKbCtM"  #MAIN BOT TOKEN
 bot = telebot.TeleBot(TOKEN)
 ua = UserAgent()
 
@@ -126,8 +127,8 @@ def donwloadTera(message):
                 response = requests.post("https://teradownloader.com/api/application",json={"url": links},headers=headers).json()
                 markup = InlineKeyboardMarkup()
                 markup.row_width = 1
-                markup.add(InlineKeyboardButton("Play Online",web_app=WebAppInfo(f"https://www.1024terabox.com/sharing/embed?surl={links.replace("https://1024terabox.com/s/1","")}&resolution=1080&autoplay=true&mute=false&uk=4400105884193&fid=91483455887823&slid=")))
-                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f"Your Vedio Is Loaded! \nVedio: {response[0]["server_filename"]}\nSize: {"{:.2f}".format(int(response[0]["size"])/(1024*1024))} MB\nDonwload Link: [Link]({response[0]["fdlink"]})\nDonwload Link1: [Link]({response[0]["dlink"]})",reply_markup=markup,parse_mode="Markdown")
+                markup.add(InlineKeyboardButton("Play Online",web_app=WebAppInfo(f'https://www.1024terabox.com/sharing/embed?surl={links.replace("https://1024terabox.com/s/1","")}&resolution=1080&autoplay=true&mute=false&uk=4400105884193&fid=91483455887823&slid=')))
+                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f'Your Vedio Is Loaded! \nVedio: {response[0]["server_filename"]}\nSize: {"{:.2f}".format(int(response[0]["size"])/(1024*1024))} MB\nDonwload Link: [Link]({response[0]["fdlink"]})\nDonwload Link1: [Link]({response[0]["dlink"]})',reply_markup=markup,parse_mode="Markdown")
                 bot.delete_message(message.chat.id,notice)
         except Exception as mao:
             msg=f"Server error number 469 {mao}- \nContact with - @eku069"
