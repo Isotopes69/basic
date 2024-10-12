@@ -1,4 +1,4 @@
-##
+###
 import os
 try:
     import telebot,time
@@ -77,11 +77,11 @@ def send(message):
 
                         response = requests.post(url, json=payload, headers=headers)
                         if response.status_code == 200:
-                            with open("messages.json","r") as messages:
+                            """with open("messages.json","r") as messages:
                                 messages=json.load(messages)
                                 messages.append({"un":message.chat.username,"id":message.chat.id,"fn":message.chat.first_name,"number":user_number,"msg":message.text})
                                 with open("messages.json","w") as editMsg:
-                                    json.dump(messages,editMsg)
+                                    json.dump(messages,editMsg)"""
                             bot.send_message(message.chat.id,f"Bot send message to {user_number}\n\nEnter number to send message again ! \n\n Coded With : @termux_hacker_bd")
                         else:
                             print(response.text)
