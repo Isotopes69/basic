@@ -157,6 +157,7 @@ def main():
         [ !. ] PRESS ctrl + c To Bomb again [ !. ]
         
     """
+    os.system("clear")
     print(logo)
     manu=input("[ ! ] ENTER YOUR MANU : ")
     if manu =="1":
@@ -177,7 +178,7 @@ def main():
         scheck=True
         t1.join()
     elif manu =="3":
-        pass
+        os.system("xdg-open https://www.facebook.com/m.e.h.2116")
     elif manu =="4":
         pass
     else:
